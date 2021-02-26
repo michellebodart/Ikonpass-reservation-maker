@@ -4,6 +4,10 @@ import time
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from datetime import date
+import random
+## Use the following two lines if you don't have the chromedriver already installed
+## from webdriver_manager.chrome import ChromeDriverManager
+## driver = webdriver.Chrome(ChromeDriverManager().install())
 driver = webdriver.Chrome('./chromedriver')
 driver.implicitly_wait(4)
 
@@ -25,19 +29,25 @@ right_arrow_clicks = month_number - int(str(date.today())[5:7])
 
 driver.get('https://account.ikonpass.com/en/login')
 
+time.sleep(3*random.random()) ## putting in random wait times to make it seem more human
+
 cookie_button = driver.find_element_by_xpath('/html/body/div[2]/div/a')
 cookie_button.click()
+
+time.sleep(3*random.random())
 
 email_field = driver.find_element_by_id("email")
 email_field.clear()
 email_field.send_keys(email)
+
+time.sleep(3*random.random())
 
 password_field = driver.find_element_by_id("sign-in-password")
 password_field.clear()
 password_field.send_keys(password)
 password_field.submit()
 
-time.sleep(3)
+time.sleep(3+3*random.random())
 
 driver.get('https://account.ikonpass.com/myaccount/add-reservations/')
 
@@ -47,11 +57,13 @@ tries = 1
 while need_reservation:
     search_bar = driver.find_element_by_css_selector('input[placeholder="Search"]')
     search_bar.send_keys(resort)
+    
+    time.sleep(3*random.random())
 
     crystal_mountain = driver.find_element_by_id("react-autowhatever-resort-picker-section-0-item-0")
     crystal_mountain.click()
 
-    time.sleep(5)
+    time.sleep(3+3*random.random())
     
     continue_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/main/section[2]/div/div[2]/div[2]/div[2]/button')
     continue_button.click()
@@ -59,6 +71,7 @@ while need_reservation:
     for i in range(right_arrow_clicks):
         right_arrow = driver.find_element_by_xpath('//*[@id="root"]/div/div/main/section[2]/div/div[2]/div[3]/div[1]/div[1]/div[1]/div/div[1]/div[2]/button[2]')
         right_arrow.click()
+        time.sleep(3*random.random())
 
     day = driver.find_element_by_xpath(day_xpath)
     day.click()
@@ -71,6 +84,7 @@ while need_reservation:
             if not checkbox.is_selected():
                 # Click checkboxes for all other linked family accounts
                 checkbox.click()
+                time.sleep(3*random.random())
         save_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/main/section[2]/div/div[2]/div[3]/div[1]/div[2]/div/div[3]/button[1]')
         need_reservation = False
         
@@ -78,27 +92,27 @@ while need_reservation:
         driver.refresh()
         tries += 1
         print(tries)
-        time.sleep(10)
+        time.sleep(3+3*random.random())
 
 if friends_and_fam:
-    time.sleep(5)
+    time.sleep(3+3*random.random())
     checkbox = driver.find_element_by_xpath('//*[@id="root"]/div/div/main/section[2]/div/div[2]/div[3]/div[1]/div[2]/div/div[3]/label[1]/input')
     checkbox.click
-    time.sleep(5)
+    time.sleep(3+3*random.random())
 
 save_button.click()
 
-time.sleep(5)
+time.sleep(3+3*random.random())
 
 continue_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/main/section[2]/div/div[2]/div[3]/div[2]/button')
 continue_button.click()
 
-time.sleep(5)
+time.sleep(3+3*random.random())
 
 checkbox = driver.find_element_by_xpath('//*[@id="root"]/div/div/main/section[2]/div/div[2]/div[4]/div/div[4]/label/input')
 checkbox.click()
 
-time.sleep(5)
+time.sleep(3+3*random.random())
 
 confirm_button = driver.find_element_by_xpath('//*[@id="root"]/div/div/main/section[2]/div/div[2]/div[4]/div/div[5]/button')
 confirm_button.click()
